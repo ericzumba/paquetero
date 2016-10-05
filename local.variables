@@ -1,0 +1,5 @@
+HOST=192.168.99.100
+CORE=proyectos
+LOCATION=/tmp
+SSH_KEY=~/.docker/machine/machines/default/id_rsa
+SSH_USER=docker
