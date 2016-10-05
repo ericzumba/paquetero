@@ -1,4 +1,5 @@
 import click
+import requests
 
 @click.group()
 def cli():
