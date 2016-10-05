@@ -11,5 +11,4 @@ RUN \
 WORKDIR /project
 COPY run.py /project/run.py
 
-ENTRYPOINT ["python"]
-CMD["-V"]
+ENTRYPOINT ["python", "/project/run.py"]
