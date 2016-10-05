@@ -5,4 +5,4 @@ run:
 	docker run -i ericzumba/socopia 
 
 dev: image
-	docker run -i ericzumba/socopia --count=3
+	docker run -i ericzumba/socopia backup 
