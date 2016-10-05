@@ -5,7 +5,7 @@ IMAGE_NAME:=$(ORG)/$(PROJECT_NAME)
 
 RUN_CMD:=docker run \
 	-i $(IMAGE_NAME) \
-	backup \
+	$(CMD) \
 	--host="$(HOST)" \
 	--core="$(CORE)" \
 	--location="$(LOCATION)"

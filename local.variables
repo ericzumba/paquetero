@@ -1,3 +1,4 @@
+CMD=backup
 HOST=192.168.99.100
 CORE=proyectos
 LOCATION=/tmp
