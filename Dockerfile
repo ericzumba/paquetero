@@ -1,13 +1,15 @@
-FROM alpine:latest
+FROM python:2.7-alpine
 
 RUN \
   mkdir -p /aws && \
-  apk -Uuv add groff less python py-pip && \
+  apk -Uuv add groff less && \
   pip install awscli && \
+  pip install click && \
   apk --purge -v del py-pip && \
   rm /var/cache/apk/*
 
-COPY run.py run.py
-
 WORKDIR /project
-ENTRYPOINT ["python /project/run.py"]
+COPY run.py /project/run.py
+
+ENTRYPOINT ["python"]
+CMD["-V"]
