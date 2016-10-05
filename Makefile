@@ -1,8 +1,26 @@
+ORG:=ericzumba
+PROJECT_NAME:=paquetero
+
+IMAGE_NAME:=$(ORG)/$(PROJECT_NAME)
+
+RUN_CMD:=docker run \
+	-i $(IMAGE_NAME) \
+	backup \
+	--host="$(HOST)" \
+	--core="$(CORE)" \
+	--location="$(LOCATION)"
+
 image:
-	docker build . -t ericzumba/paquetero
+	docker build . -t $(IMAGE_NAME) 
 
 run:
-	docker run -i ericzumba/paquetero
+	$(shell echo $(RUN_CMD)) 
 
 dev: image
-	docker run -i ericzumba/paquetero backup --host="$(HOST)" --core="$(CORE)" --location="$(LOCATION)"
+	$(shell echo $(RUN_CMD))	
+
+push: image
+	docker push $(IMAGE_NAME) 
+
+remote: push
+	ssh -i $(SSH_KEY) $(SSH_USER)@$(HOST) '$(RUN_CMD)'	
