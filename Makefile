@@ -5,4 +5,4 @@ run:
 	docker run -i ericzumba/socopia 
 
 dev: image
-	docker run -i ericzumba/socopia backup 
+	docker run -i ericzumba/socopia backup --host="$(HOST)" --core="$(CORE)" --location="$(LOCATION)"
