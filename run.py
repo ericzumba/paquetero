@@ -21,8 +21,9 @@ def backup(host, port, core, location, max_retries, time_between_retries):
 
   while True and max_retries > 0:
     click.echo('Checking if backup is ready')
-    r = requests.get('http://{0}:{1}/solr/{2}/replication?command=restorestatus'.format(host, port, core))
-    if "No restore actions in progress" in r.content:
+    status = requests.get('http://{0}:{1}/solr/{2}/replication?command=restorestatus&wt=json'.format(host, port, core)) \
+      .json()['restorestatus']['status']
+    if "No restore actions in progress" in status:
       click.echo('Backup is ready')
       move_backup('a', 'b')
       break
