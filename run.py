@@ -21,11 +21,12 @@ def backup(host, port, core, location):
     r = requests.get('http://{0}:{1}/solr/{2}/replication?command=restorestatus'.format(host, port, core))
     if "No restore actions in progress" in r.content:
       click.echo('Backup is ready')
+      move_backup('a', 'b')
       break
     else: 
       time.sleep(5) 
 
-def move_backup(source, target)
+def move_backup(source, target):
   click.echo('Moving backup to go')
   
 
