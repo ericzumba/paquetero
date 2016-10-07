@@ -1,10 +1,18 @@
 import click
 from os import listdir
+from os import path
 import requests
 import time
 
-def find_backup_file(folder_name):
- return listdir(folder_name) 
+def find_backup_file(old_backups, folder_name):
+  found_backups = set(listdir(folder_name)) - old_backups
+  if len(found_backups) == 1:
+    return path.join(folder_name, found_backups.pop())
+  else:
+    raise Exception('too many backup files found')
+
+def list_existing_backup_files(folder_name):
+  return set(listdir(folder_name))
 
 def solr(host, port, core):
   def backup(location, retries, sleep_time):
@@ -29,9 +37,11 @@ def solr(host, port, core):
         time.sleep(sleep_time)
         return check(retries - 1) 
     
+    existing_backups = list_existing_backup_files(core_location)
+    click.echo(existing_backups)
     if request_backup():
       click.echo('Backup requested')
       if check(retries):
-        return find_backup_file(core_location)
+        return find_backup_file(existing_backups, core_location)
 
   return dict(backup=backup)
