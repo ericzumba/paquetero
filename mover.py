@@ -1,6 +1,14 @@
-import click
 import boto
 import boto.s3
+import click
+from os import environ 
 
-def copy_to_s3(source):
-  click.echo('starting copy of {0} to s3'.format(source))
+aws_id = environ['AWS_ACCESS_KEY_ID']
+aws_secret = environ['AWS_SECRET_ACCESS_KEY']
+
+def s3(zone):
+  conn = boto.connect_s3(aws_id, aws_secret)
+  def store(source):
+    click.echo('starting copy of {0} to s3'.format(source))
+
+  return dict(store=store) 
