@@ -1,6 +1,7 @@
 import click
 
 from solr import solr
+from mover import mover 
 
 @click.group()
 def cli():
@@ -14,7 +15,8 @@ def cli():
 @click.option('--max-retries', default=30, help='Maximum times paquetero checks if backup is ready')
 @click.option('--time-between-retries', default=5, help='Time in seconds between each "backup is ready?" request')
 def backup(host, port, core, location, max_retries, time_between_retries):
-  solr(host, port, core)['backup'](location, max_retries, time_between_retries)
+  backup = solr(host, port, core)['backup'](location, max_retries, time_between_retries)
+  click.echo(backup)
 
 @click.command()
 def restore():

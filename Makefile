@@ -4,6 +4,7 @@ PROJECT_NAME:=paquetero
 IMAGE_NAME:=$(ORG)/$(PROJECT_NAME)
 
 RUN_CMD:=docker run \
+	-v $(LOCATION):$(LOCATION) \
 	-i $(IMAGE_NAME) \
 	$(CMD) \
 	--host="$(HOST)" \

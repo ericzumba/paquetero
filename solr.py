@@ -1,6 +1,10 @@
 import click
+from os import listdir
 import requests
 import time
+
+def find_backup_file(folder_name):
+ return listdir(folder_name) 
 
 def solr(host, port, core):
   def backup(location, retries, sleep_time):
@@ -8,7 +12,8 @@ def solr(host, port, core):
 
     def request_backup():
       click.echo('Requesting backup')
-      url = 'http://{0}:{1}/solr/{2}/replication?command=backup&location=${3}'.format(host, port, core, core_location)
+      url = 'http://{0}:{1}/solr/{2}/replication?command=backup&location={3}'.format(host, port, core, core_location)
+      click.echo(url)
       return requests.get(url).status_code == 200
 
     def check(retries):
@@ -24,6 +29,6 @@ def solr(host, port, core):
     if request_backup():
       click.echo('Backup requested')
       if check(retries):
-        click.echo('Backup is ready')
+        return find_backup_file(core_location)
 
   return dict(backup=backup)
