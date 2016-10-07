@@ -2,6 +2,6 @@ CMD=backup
 HOST=192.168.99.100
 CORE=proyectos
 LOCATION=/tmp
-S3_BUCKET=/solr-indexer/solr-backup-test
+S3_BUCKET=solr-indexer
 SSH_KEY=~/.docker/machine/machines/default/id_rsa
 SSH_USER=docker

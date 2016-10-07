@@ -1,22 +1,19 @@
-import boto
-import boto.s3
-from boto.s3.key import Key
+import tinys3
 import click
+import shutil
 from os import environ 
 
 aws_id = environ['AWS_ACCESS_KEY_ID']
 aws_secret = environ['AWS_SECRET_ACCESS_KEY']
 
 def s3(region):
-  conn = boto.s3.connect_to_region(region, aws_access_key_id=aws_id, aws_secret_access_key=aws_secret, is_secure=True)
+  conn = tinys3.Connection(aws_id, aws_secret, tls=True, endpoint='s3-{0}.amazonaws.com'.format(region))
   
-  def create_bucket(bucket_name):
-    click.echo('creating s3 bucket {0}'.format(bucket_name))
-    conn.create_bucket(bucket_name, location=region)
-    click.echo('s3 bucket created')
-
   def store(bucket_name, source):
-    create_bucket(bucket_name)
-    click.echo('starting copy of {0} to s3'.format(source))
+    tar = '{0}.tar'.format(source)
+    shutil.make_archive(source, 'tar', source)
+    click.echo('starting copy of {0} to s3 {1}'.format(tar, bucket_name))
+    conn.upload(tar, open(tar, 'rb'), bucket_name)
+    click.echo('copy completed')
 
   return dict(store=store) 
