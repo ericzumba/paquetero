@@ -11,7 +11,8 @@ RUN_CMD:=docker run \
 	$(CMD) \
 	--host="$(HOST)" \
 	--core="$(CORE)" \
-	--location="$(LOCATION)"
+	--location="$(LOCATION)" \
+	--s3-bucket="$(S3_BUCKET)"
 
 image:
 	docker build . -t $(IMAGE_NAME) 

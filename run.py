@@ -11,13 +11,14 @@ def cli():
 @click.option('--host', help='Solr host to be backed up')
 @click.option('--port', default=8983, help='Solr port')
 @click.option('--core', help='Solr core to be backed up')
-@click.option('--location', help='Disk location to which solr will dump the backup ')
+@click.option('--location', help='Disk location to which solr will dump the backup')
+@click.option('--s3-bucket', help='S3 bucket in to store dump file')
 @click.option('--max-retries', default=30, help='Maximum times paquetero checks if backup is ready')
 @click.option('--time-between-retries', default=5, help='Time in seconds between each "backup is ready?" request')
 @click.option('--aws-region', default="sa-east-1", help='AWS region in which s3 bucket is located')
-def backup(host, port, core, location, max_retries, time_between_retries, aws_region):
+def backup(host, port, core, location, max_retries, s3_bucket, time_between_retries, aws_region):
   backup = solr(host, port, core)['backup'](location, max_retries, time_between_retries)
-  s3(aws_region)['store'](backup) 
+  s3(aws_region)['store'](s3_bucket, backup) 
 
 @click.command()
 def restore():
