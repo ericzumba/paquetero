@@ -1,6 +1,6 @@
 import click
-def mover():
-  def replace(source, target):
-    click.echo('moving {0} to {1}'.format(source, target))
-  
-  return dict(replace=replace)
+import boto
+import boto.s3
+
+def copy_to_s3(source):
+  click.echo('starting copy of {0} to s3'.format(source))

@@ -1,7 +1,7 @@
 import click
 
 from solr import solr
-from mover import mover 
+from mover import copy_to_s3 
 
 @click.group()
 def cli():
@@ -16,7 +16,7 @@ def cli():
 @click.option('--time-between-retries', default=5, help='Time in seconds between each "backup is ready?" request')
 def backup(host, port, core, location, max_retries, time_between_retries):
   backup = solr(host, port, core)['backup'](location, max_retries, time_between_retries)
-  click.echo(backup)
+  copy_to_s3(backup) 
 
 @click.command()
 def restore():
