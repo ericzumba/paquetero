@@ -8,6 +8,6 @@ RUN \
   rm /var/cache/apk/*
 
 WORKDIR /project
-COPY run.py /project/run.py
+COPY *.py /project/
 
 ENTRYPOINT ["python", "/project/run.py"]
