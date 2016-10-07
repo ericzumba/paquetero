@@ -12,9 +12,8 @@ def solr(host, port, core):
 
     def request_backup():
       click.echo('Requesting backup')
-      url = 'http://{0}:{1}/solr/{2}/replication?command=backup&location={3}'.format(host, port, core, core_location)
-      click.echo(url)
-      return requests.get(url).status_code == 200
+      url = 'http://{0}:{1}/solr/{2}/replication?command=backup&location={3}&wt=json'.format(host, port, core, core_location)
+      return 'exception' not in requests.get(url).json()
 
     def check(retries):
       if retries > 0:
