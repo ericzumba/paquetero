@@ -33,6 +33,6 @@ push: image
 remote: push
 	ssh -i $(SSH_KEY) $(SSH_USER)@$(HOST) '$(RUN_CMD)'	
 
-compose: image 
-	docker-compose run $(ENV_VARS) $(PROJECT_NAME) $(CMD_OPTS)
+integ:
+	docker-compose -f integration/docker-compose.yml run --entrypoint='echo ola' $(ENV_VARS) $(PROJECT_NAME) $(CMD_OPTS)
 
