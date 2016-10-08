@@ -19,7 +19,7 @@ RUN_CMD:=docker run \
 	$(CMD_OPTS)
 
 image:
-	docker build . -t $(IMAGE_NAME) 
+	docker build ./app -t $(IMAGE_NAME) 
 
 run:
 	$(shell echo $(RUN_CMD)) 
@@ -30,8 +30,9 @@ dev: image
 push: image
 	docker push $(IMAGE_NAME) 
 
+remote: push
+	ssh -i $(SSH_KEY) $(SSH_USER)@$(HOST) '$(RUN_CMD)'	
+
 compose: image 
 	docker-compose run $(ENV_VARS) $(PROJECT_NAME) $(CMD_OPTS)
 
-remote: push
-	ssh -i $(SSH_KEY) $(SSH_USER)@$(HOST) '$(RUN_CMD)'	
