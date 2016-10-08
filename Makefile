@@ -34,5 +34,8 @@ remote: push
 	ssh -i $(SSH_KEY) $(SSH_USER)@$(HOST) '$(RUN_CMD)'	
 
 integ:
-	docker-compose -f integration/docker-compose.yml run --entrypoint='echo ola' $(ENV_VARS) $(PROJECT_NAME) $(CMD_OPTS)
+	docker-compose \
+		-f integration/docker-compose.yml run \
+		--entrypoint='echo ola' \
+		$(ENV_VARS) $(PROJECT_NAME)-integ $(CMD_OPTS)
 

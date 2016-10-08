@@ -1,6 +1,6 @@
 version: '2'
 services:
-  paquetero:
+  paquetero-integ:
     build: . 
     environment:
       - AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}"
