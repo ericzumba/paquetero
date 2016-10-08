@@ -5,3 +5,15 @@ services:
     environment:
       - AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}"
       - AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"
+    depends_on:
+      - solr
+    volumes:
+      - tmp:/tmp
+  solr:
+    image: solr:6.2-alpine
+    volumes:
+      - tmp:/tmp
+volumes:
+  tmp:
+    external: false
+    

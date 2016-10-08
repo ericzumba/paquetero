@@ -1,0 +1,7 @@
+CMD=backup
+HOST=solr
+CORE=proyectos
+LOCATION=/tmp
+S3_BUCKET=solr-indexer
+SSH_KEY=~/.docker/machine/machines/default/id_rsa
+SSH_USER=docker
