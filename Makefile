@@ -29,7 +29,7 @@ push: image
 	docker push $(IMAGE_NAME) 
 
 compose: image 
-	docker-compose up
+	docker-compose run $(ENV_VAR) $(PROJECT_NAME)
 
 remote: push
 	ssh -i $(SSH_KEY) $(SSH_USER)@$(HOST) '$(RUN_CMD)'	
