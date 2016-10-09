@@ -35,7 +35,8 @@ remote: push
 
 integ:
 	docker-compose \
-		-f integration/docker-compose.yml run \
+		-f integration/docker-compose.yml \
+		run --rm \
 		--entrypoint=cucumber \
 		$(ENV_VARS) $(PROJECT_NAME)-integ
 
