@@ -8,6 +8,7 @@ services:
     depends_on:
       - solr
     volumes:
+      - ./features:/usr/app/features
       - tmp:/tmp
   solr:
     image: solr:6.2-alpine
