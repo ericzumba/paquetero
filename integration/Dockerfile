@@ -8,7 +8,8 @@ RUN apk add ruby-bundler ruby-dev ruby-rdoc ruby-irb
 
 RUN rm -rf /var/cache/apk/*
 
-RUN gem install cucumber
-
 RUN mkdir /usr/app 
 WORKDIR /usr/app
+
+COPY Gemfile Gemfile
+RUN bundle install
