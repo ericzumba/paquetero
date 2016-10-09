@@ -5,4 +5,6 @@ Feature: Requests backup
 	Backup should be sent to S3
 
 Scenario: Everything goes well
-	Given there is one indexed document
+	Given solr is running 
+	And it has a core named books
+	And there is one indexed document
