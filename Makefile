@@ -36,6 +36,6 @@ remote: push
 integ:
 	docker-compose \
 		-f integration/docker-compose.yml run \
-		--entrypoint='echo ola' \
-		$(ENV_VARS) $(PROJECT_NAME)-integ $(CMD_OPTS)
+		--entrypoint=cucumber \
+		$(ENV_VARS) $(PROJECT_NAME)-integ
 
