@@ -30,9 +30,9 @@ def solr(host, port, core):
     def check(retries):
       if retries > 0:
         click.echo('Checking if backup is ready')
-        url = 'http://{0}:{1}/solr/{2}/replication?command=restorestatus&wt=json'.format(host, port, core)
-        status = requests.get(url).json()['restorestatus']['status']
-        return "No restore actions in progress" in status 
+        url = 'http://{0}:{1}/solr/{2}/replication?command=backupstatus&wt=json'.format(host, port, core)
+        status = requests.get(url).json()['backupstatus']['status']
+        return "No backup actions in progress" in status 
       else:
         time.sleep(sleep_time)
         return check(retries - 1) 
