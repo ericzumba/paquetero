@@ -13,3 +13,6 @@ Given(/^there are (\d+) books indexed$/) do |books|
   @solr.commit
 end
 
+When(/^I request a backup$/) do
+  puts `python /project/run.py`
+end
