@@ -2,14 +2,15 @@ require 'rsolr'
 require 'fileutils'
 
 Given(/^solr is running$/) do
-	@solr = RSolr.connect :url => 'http://solr:8983/solr'	
+  insist(5) do # Solr takes some time to start
+    @solr = RSolr.connect :url => 'http://solr:8983/solr'	
+    @solr.get '/'
+  end
 end
 
 Given(/^it has a core named books$/) do
   FileUtils.mkdir_p '/opt/solr/server/solr/books'
-  insist(5) do
-    @solr.get 'admin/cores', params: { action: 'CREATE', name: 'books' }
-  end
+  @solr.get 'admin/cores', params: { action: 'CREATE', name: 'books' }
 end
 
 Given(/^there is one indexed document$/) do
