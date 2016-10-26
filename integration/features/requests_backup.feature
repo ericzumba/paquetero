@@ -7,4 +7,4 @@ Feature: Requests backup
 Scenario: Everything goes well
 	Given solr is running 
 	And it has a core named books
-	And there is one indexed document
+  And there are 3 books indexed

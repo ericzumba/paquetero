@@ -14,8 +14,10 @@ Given(/^it has a core named books$/) do
   @solr = RSolr.connect :url => 'http://solr:8983/solr/books'	
 end
 
-Given(/^there is one indexed document$/) do
-  @solr.add(id: 1)
+Given(/^there are (\d+) books indexed$/) do |books|
+  (1..books.to_i).each do |i|
+    @solr.add(id: i)
+  end
   @solr.commit
 end
 
