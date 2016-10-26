@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <luceneMatchVersion>LATEST</luceneMatchVersion>
+    <directoryFactory class="${solr.directoryFactory:solr.StandardDirectoryFactory}" name="DirectoryFactory"/>
+    <dataDir>${solr.core0.data.dir:}</dataDir>
+    <indexConfig>
+        <lockType>${solr.lock.type:native}</lockType>
+        <infoStream>true</infoStream>
+    </indexConfig>
+    <jmx/>
+    <updateHandler class="solr.DirectUpdateHandler2">
+        <updateLog>
+            <str name="dir">${solr.core0.ulog.dir:}</str>
+        </updateLog>
+        <autoCommit>
+            <maxTime>${solr.autoCommit.maxTime:15000}</maxTime>
+            <openSearcher>false</openSearcher>
+        </autoCommit>
+        <autoSoftCommit>
+            <maxTime>${solr.autoSoftCommit.maxTime:120000}</maxTime>
+        </autoSoftCommit>
+    </updateHandler>
+    <searchComponent name="tvComponent" class="org.apache.solr.handler.component.TermVectorComponent"/>
+    <requestHandler name="/tvrh" class="org.apache.solr.handler.component.SearchHandler">
+        <lst name="defaults">
+            <bool name="tv">true</bool>
+            <str name="echoParams">explicit</str>
+            <int name="rows">10</int>
+            <str name="df">id</str>
+        </lst>
+        <arr name="last-components">
+            <str>tvComponent</str>
+        </arr>
+    </requestHandler>
+
+    <requestHandler class="solr.SearchHandler" name="/select">
+        <lst name="defaults">
+            <str name="echoParams">explicit</str>
+            <int name="rows">10</int>
+            <str name="df">id</str>
+        </lst>
+    </requestHandler>
+    <requestHandler class="solr.SearchHandler" name="/query">
+        <lst name="defaults">
+            <str name="echoParams">explicit</str>
+            <str name="wt">json</str>
+            <str name="indent">true</str>
+            <str name="df">text</str>
+        </lst>
+    </requestHandler>
+    <requestHandler class="solr.RealTimeGetHandler" name="/get">
+        <lst name="defaults">
+            <str name="omitHeader">true</str>
+            <str name="wt">json</str>
+            <str name="indent">true</str>
+        </lst>
+    </requestHandler>
+    <requestHandler class="solr.ReplicationHandler" name="/replication"/>
+    <admin>
+        <defaultQuery>*:*</defaultQuery>
+    </admin>
+    <query>
+        <maxBooleanClauses>3072</maxBooleanClauses>
+        <filterCache autowarmCount="128" class="solr.FastLRUCache" initialSize="${solr.location.filter.cache.size:512}" size="${solr.location.filter.cache.size:512}"/>
+        <queryResultCache autowarmCount="0" class="solr.LRUCache" initialSize="512" size="512"/>
+        <documentCache autowarmCount="0" class="solr.LRUCache" initialSize="512" size="512"/>
+        <cache autowarmCount="10" class="solr.search.LRUCache" initialSize="0" name="perSegFilter" regenerator="solr.NoOpRegenerator" size="10"/>
+        <enableLazyFieldLoading>true</enableLazyFieldLoading>
+        <queryResultWindowSize>20</queryResultWindowSize>
+        <queryResultMaxDocsCached>200</queryResultMaxDocsCached>
+    </query>
+</config>

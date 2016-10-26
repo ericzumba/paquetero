@@ -7,11 +7,16 @@ services:
       - AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"
     depends_on:
       - solr
+    volumes_from:
+      - solr
     volumes:
       - ./features:/usr/app/features
-      - tmp:/tmp
   solr:
-    image: solr:6.2-alpine
+    build: solr 
+    expose: 
+      - "8983"
+    ports: 
+      - "8983:8983" 
     volumes:
       - tmp:/tmp
 volumes:
