@@ -8,5 +8,6 @@ Before do
 end
 
 After do
-  # @solr.delete_by_query 
+  @solr.delete_by_query  '*:*'
+  @solr.commit
 end

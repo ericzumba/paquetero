@@ -6,4 +6,4 @@ Feature: Requests backup
 
 Scenario: Everything goes well
   Given there are 3 books indexed
-
+  When I request a backup
