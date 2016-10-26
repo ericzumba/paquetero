@@ -11,9 +11,11 @@ end
 Given(/^it has a core named books$/) do
   FileUtils.mkdir_p '/opt/solr/server/solr/books'
   @solr.get 'admin/cores', params: { action: 'CREATE', name: 'books' }
+  @solr = RSolr.connect :url => 'http://solr:8983/solr/books'	
 end
 
 Given(/^there is one indexed document$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  @solr.add(id: 1)
+  @solr.commit
 end
 
