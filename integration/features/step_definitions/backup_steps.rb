@@ -18,5 +18,5 @@ When(/^I request a backup$/) do
 end
 
 Then(/^I should see ('[^\']*')$/) do |message|
-  puts message
+  @command_output.include?(message) 
 end

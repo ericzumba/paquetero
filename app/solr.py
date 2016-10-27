@@ -7,9 +7,9 @@ import time
 import json
 
 def find_backup_file(old_backups, folder_name):
-  found_backups = set(listdir(folder_name)) - old_backups
-  if len(found_backups) == 1:
-    return path.join(folder_name, found_backups.pop())
+  backups_found = set(listdir(folder_name)) - old_backups
+  if len(backups_found) == 1:
+    return path.join(folder_name, backups_found.pop())
   else:
     raise Exception('too many backup files found')
 
