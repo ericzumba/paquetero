@@ -1,6 +1,6 @@
 version: '2'
 services:
-  paquetero-integ:
+  paquetero_integ:
     build: . 
     environment:
       - AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}"
@@ -11,9 +11,8 @@ services:
       - SOLR_HOST=solr
     depends_on:
       - solr
-    volumes_from:
-      - solr
     volumes:
+      - /tmp:/tmp
       - /var/run/docker.sock:/var/run/docker.sock  
       - ./features:/usr/app/features
   solr:
@@ -23,7 +22,4 @@ services:
     ports: 
       - "8983:8983" 
     volumes:
-      - tmp:/tmp
-volumes:
-  tmp:
-    external: false
+      - /tmp:/tmp

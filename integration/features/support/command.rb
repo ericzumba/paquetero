@@ -7,7 +7,16 @@ Before do
   SOLR_HOST             = ENV['SOLR_HOST']
 
   def command(cmd, core)
-    `docker run -e AWS_ACCESS_KEY_ID=#{AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=#{AWS_SECRET_ACCESS_KEY} -v #{SHARED_VOLUME}:#{SHARED_VOLUME} -i #{IMAGE_UNDER_TEST} #{cmd} --host=#{SOLR_HOST} --core=#{core} --location=#{SHARED_VOLUME} --s3-bucket=#{BUCKET}`
+    `docker run \
+      --net=integration_default \
+      -e AWS_ACCESS_KEY_ID=#{AWS_ACCESS_KEY_ID} \
+      -e AWS_SECRET_ACCESS_KEY=#{AWS_SECRET_ACCESS_KEY} \
+      -v #{SHARED_VOLUME}:#{SHARED_VOLUME} \
+      -i #{IMAGE_UNDER_TEST} #{cmd} \
+        --host=#{SOLR_HOST} \
+        --core=#{core} \
+        --location=#{SHARED_VOLUME} \
+        --s3-bucket=#{BUCKET}`
   end
 end
 

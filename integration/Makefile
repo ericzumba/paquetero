@@ -3,7 +3,7 @@ dev: rebuild down
 		-f docker-compose.yml \
 		run --rm \
 		--entrypoint=cucumber \
-		paquetero-integ
+		paquetero_integ
 
 down:
 	docker-compose down

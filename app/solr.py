@@ -1,6 +1,7 @@
 import click
 from os import listdir
 from os import path
+from os import makedirs 
 import requests
 import time
 
@@ -12,7 +13,11 @@ def find_backup_file(old_backups, folder_name):
     raise Exception('too many backup files found')
 
 def list_existing_backup_files(folder_name):
-  return set(listdir(folder_name))
+  if path.isdir(folder_name):
+    return set(listdir(folder_name))
+  else:
+    makedirs(folder_name)
+    return set()
 
 def solr(host, port, core):
   def backup(location, retries, sleep_time):
