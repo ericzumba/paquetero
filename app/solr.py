@@ -4,6 +4,7 @@ from os import path
 from os import makedirs 
 import requests
 import time
+import json
 
 def find_backup_file(old_backups, folder_name):
   found_backups = set(listdir(folder_name)) - old_backups
@@ -38,7 +39,10 @@ def solr(host, port, core):
       time.sleep(10)
       details = requests.get(url).json()['details']
 
-      if 'backup' in details and "{0}/{1}".format(core_location, backup_name) in details['backup']:
+      click.echo(json.dumps(details))
+
+      if ('backup' in details) and ("{0}/snapshot.{1}".format(core_location, backup_name) in details['backup']):
+        click.echo('Backup is ready')
         return True
       else:
         if retries > 0:

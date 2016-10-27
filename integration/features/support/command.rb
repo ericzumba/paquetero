@@ -13,7 +13,7 @@ Before do
       -e AWS_SECRET_ACCESS_KEY=#{AWS_SECRET_ACCESS_KEY} \
       -v #{SHARED_VOLUME}:#{SHARED_VOLUME} \
       -i #{IMAGE_UNDER_TEST} #{cmd} \
-        --max-retries=1 \
+        --max-retries=0 \
         --time-between-retries=1 \
         --host=#{SOLR_HOST} \
         --core=#{core} \

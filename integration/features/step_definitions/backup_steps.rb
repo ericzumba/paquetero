@@ -14,5 +14,11 @@ Given(/^there are (\d+) books indexed$/) do |books|
 end
 
 When(/^I request a backup$/) do
-  puts command("backup", "books")
+  @command_output = command("backup", "books")
+  puts @command_output
+  @command_output
+end
+
+Then(/^I should see '(\w+)'$/) do |message|
+  puts message
 end
