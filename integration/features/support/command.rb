@@ -14,7 +14,7 @@ Before do
       -v #{SHARED_VOLUME}:#{SHARED_VOLUME} \
       -i #{IMAGE_UNDER_TEST} #{cmd} \
         --max-retries=0 \
-        --time-between-retries=1 \
+        --time-between-retries=0 \
         --host=#{SOLR_HOST} \
         --core=#{core} \
         --location=#{SHARED_VOLUME} \

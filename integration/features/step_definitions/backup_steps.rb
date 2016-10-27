@@ -15,10 +15,8 @@ end
 
 When(/^I request a backup$/) do
   @command_output = command("backup", "books")
-  puts @command_output
-  @command_output
 end
 
-Then(/^I should see '(\w+)'$/) do |message|
+Then(/^I should see ('[^\']*')$/) do |message|
   puts message
 end
