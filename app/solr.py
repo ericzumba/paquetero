@@ -7,9 +7,11 @@ import time
 import json
 
 def find_backup_file(old_backups, folder_name):
-  backups_found = set(listdir(folder_name)) - old_backups
+  backups_found = set(listdir(folder_name))
   if len(backups_found) == 1:
     return path.join(folder_name, backups_found.pop())
+  elif len(backups_found) == 0:
+    raise Exception('no backup files found')
   else:
     raise Exception('too many backup files found')
 
@@ -39,8 +41,6 @@ def solr(host, port, core):
       time.sleep(10)
       details = requests.get(url).json()['details']
 
-      click.echo(json.dumps(details))
-
       if ('backup' in details) and ("{0}/snapshot.{1}".format(core_location, backup_name) in details['backup']):
         click.echo('Backup is ready')
         return True
@@ -53,7 +53,6 @@ def solr(host, port, core):
           raise Exception('No backup found - maximum number of retries exceeded') 
     
     existing_backups = list_existing_backup_files(core_location)
-    click.echo(existing_backups)
     if request_backup():
       click.echo('Backup requested')
       if check(retries):

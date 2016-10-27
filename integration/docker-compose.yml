@@ -7,12 +7,13 @@ services:
       - AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"
       - BUCKET=solr-indexer/solr-backup
       - IMAGE_UNDER_TEST=ericzumba/paquetero
-      - SHARED_VOLUME=/tmp
+      - GUEST_VOLUME=/tmp/dump
+      - HOST_VOLUME=/tmp/integ
       - SOLR_HOST=solr
     depends_on:
       - solr
     volumes:
-      - /tmp:/tmp
+      - /tmp/integ:/tmp/dump
       - /var/run/docker.sock:/var/run/docker.sock  
       - ./features:/usr/app/features
   solr:
@@ -22,4 +23,4 @@ services:
     ports: 
       - "8983:8983" 
     volumes:
-      - /tmp:/tmp
+      - /tmp/integ:/tmp/dump

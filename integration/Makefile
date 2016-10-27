@@ -5,6 +5,14 @@ dev: rebuild down
 		--entrypoint=cucumber \
 		paquetero_integ
 
+reset: down rm_volume create_volume
+
+rm_volume:
+	docker volume rm tmp
+
+create_volume:
+	docker volume create --name tmp
+
 down:
 	docker-compose down
 
