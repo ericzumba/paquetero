@@ -1,4 +1,4 @@
-dev: down
+dev: rebuild down
 	docker-compose \
 		-f docker-compose.yml \
 		run --rm \
@@ -7,3 +7,10 @@ dev: down
 
 down:
 	docker-compose down
+
+rebuild: rebuild-app
+	docker build .
+
+rebuild-app:
+	cd .. && make image 
+	

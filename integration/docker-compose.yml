@@ -3,6 +3,7 @@ services:
   paquetero-integ:
     build: . 
     environment:
+      - IMAGE_UNDER_TEST="ericzumba/paquetero"
       - AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}"
       - AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"
     depends_on:
@@ -10,6 +11,7 @@ services:
     volumes_from:
       - solr
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  
       - ./features:/usr/app/features
   solr:
     build: solr 

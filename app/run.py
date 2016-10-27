@@ -2,6 +2,7 @@ import click
 
 from solr import solr
 from mover import s3 
+from os import environ 
 
 @click.group()
 def cli():
