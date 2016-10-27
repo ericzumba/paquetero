@@ -14,5 +14,5 @@ Given(/^there are (\d+) books indexed$/) do |books|
 end
 
 When(/^I request a backup$/) do
-  puts command("restore")
+  puts command("backup", "books")
 end

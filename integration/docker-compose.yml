@@ -3,9 +3,12 @@ services:
   paquetero-integ:
     build: . 
     environment:
-      - IMAGE_UNDER_TEST="ericzumba/paquetero"
       - AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}"
       - AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"
+      - BUCKET=solr-indexer
+      - IMAGE_UNDER_TEST=ericzumba/paquetero
+      - SHARED_VOLUME=/tmp
+      - SOLR_HOST=solr
     depends_on:
       - solr
     volumes_from:

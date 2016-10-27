@@ -1,10 +1,13 @@
 Before do 
-  @aws_id = ENV['AWS_ACCESS_KEY_ID'] 
-  @aws_key = ENV['AWS_SECRET_ACCESS_KEY']
-  @image = ENV['IMAGE_UNDER_TEST']
+  AWS_ACCESS_KEY_ID     = ENV['AWS_ACCESS_KEY_ID'] 
+  AWS_SECRET_ACCESS_KEY = ENV['AWS_SECRET_ACCESS_KEY']
+  BUCKET                = ENV['BUCKET']
+  IMAGE_UNDER_TEST      = ENV['IMAGE_UNDER_TEST']
+  SHARED_VOLUME         = ENV['SHARED_VOLUME']
+  SOLR_HOST             = ENV['SOLR_HOST']
 
-  def command(cmd)
-    `docker run -e AWS_ACCESS_KEY_ID=#{@aws_id} -e AWS_SECRET_ACCESS_KEY=#{@aws_key} -v /tmp:/tmp -i #{@image} #{cmd}`
+  def command(cmd, core)
+    `docker run -e AWS_ACCESS_KEY_ID=#{AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=#{AWS_SECRET_ACCESS_KEY} -v #{SHARED_VOLUME}:#{SHARED_VOLUME} -i #{IMAGE_UNDER_TEST} #{cmd} --host=#{SOLR_HOST} --core=#{core} --location=#{SHARED_VOLUME} --s3-bucket=#{BUCKET}`
   end
 end
 
