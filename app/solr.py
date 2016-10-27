@@ -20,12 +20,12 @@ def list_existing_backup_files(folder_name):
     return set()
 
 def solr(host, port, core):
-  def backup(location, retries, sleep_time):
+  def backup(location, retries, sleep_time, backup_name):
     core_location = "{0}/{1}".format(location, core)
 
     def request_backup():
       click.echo('Requesting backup')
-      url = 'http://{0}:{1}/solr/{2}/replication?command=backup&location={3}&wt=json'.format(host, port, core, core_location)
+      url = 'http://{0}:{1}/solr/{2}/replication?command=backup&location={3}&name={4}&wt=json'.format(host, port, core, core_location, backup_name)
       resp = requests.get(url).json()
       if 'exception' not in resp:
         return True
@@ -33,14 +33,20 @@ def solr(host, port, core):
         click.echo('Could not request backup: {0}'.format(resp['exception']))
 
     def check(retries):
-      if retries > 0:
-        click.echo('Checking if backup is ready')
-        url = 'http://{0}:{1}/solr/{2}/replication?command=backupstatus&wt=json'.format(host, port, core)
-        status = requests.get(url).json()['backupstatus']['status']
-        return "No backup actions in progress" in status 
+      click.echo('Checking if backup is ready')
+      url = 'http://{0}:{1}/solr/{2}/replication?command=details&wt=json'.format(host, port, core)
+      time.sleep(10)
+      details = requests.get(url).json()['details']
+
+      if 'backup' in details and "{0}/{1}".format(core_location, backup_name) in details['backup']:
+        return True
       else:
-        time.sleep(sleep_time)
-        return check(retries - 1) 
+        if retries > 0:
+          click.echo('Waiting for backup to become available')
+          time.sleep(sleep_time)
+          return check(retries - 1) 
+        else:
+          raise Exception('No backup found - maximum number of retries exceeded') 
     
     existing_backups = list_existing_backup_files(core_location)
     click.echo(existing_backups)

@@ -7,7 +7,7 @@ Before do
   @solr = RSolr.connect :url => 'http://solr:8983/solr/books'	
 end
 
-After do
-  @solr.delete_by_query  '*:*'
-  @solr.commit
-end
+# After do
+#   @solr.delete_by_query  '*:*'
+#   @solr.commit
+# end
