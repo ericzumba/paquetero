@@ -1,20 +1,23 @@
-dev: rebuild down
+test: rebuild
+	docker volume create --name tmp_integ
 	docker-compose \
 		-f docker-compose.yml \
 		run --rm \
-		--entrypoint=cucumber \
+		--entrypoint=cucumber  \
 		paquetero_integ
-
-reset: down rm_volume create_volume
-
-rm_volume:
-	docker volume rm tmp
-
-create_volume:
-	docker volume create --name tmp
-
-down:
 	docker-compose down
+	docker volume rm tmp_integ
+
+
+bash: 
+	docker volume create --name tmp_integ
+	docker-compose \
+		-f docker-compose.yml \
+		run --rm \
+		--entrypoint="/bin/bash"  \
+		paquetero_integ
+	docker-compose down
+	docker volume rm tmp_integ
 
 rebuild: rebuild-app
 	docker build .

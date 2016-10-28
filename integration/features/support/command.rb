@@ -8,7 +8,7 @@ Before do
   SOLR_HOST             = ENV['SOLR_HOST']
 
   def command(cmd, core)
-    `docker run \
+    "docker run \
       --rm \
       --net=integration_default \
       -e AWS_ACCESS_KEY_ID=#{AWS_ACCESS_KEY_ID} \
@@ -20,7 +20,7 @@ Before do
         --host=#{SOLR_HOST} \
         --core=#{core} \
         --location=#{GUEST_VOLUME} \
-        --s3-bucket=#{BUCKET}`
+        --s3-bucket=#{BUCKET}"
   end
 end
 

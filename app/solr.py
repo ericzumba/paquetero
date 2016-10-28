@@ -2,6 +2,7 @@ import click
 from os import listdir
 from os import path
 from os import makedirs 
+from os import chmod 
 import requests
 import time
 import json
@@ -17,9 +18,12 @@ def find_backup_file(old_backups, folder_name):
 
 def list_existing_backup_files(folder_name):
   if path.isdir(folder_name):
+    click.echo("Directory exists {0}".format(folder_name))
     return set(listdir(folder_name))
   else:
+    click.echo("Creating directory {0}".format(folder_name))
     makedirs(folder_name)
+    chmod(folder_name, 0o777)
     return set()
 
 def solr(host, port, core):
@@ -27,6 +31,7 @@ def solr(host, port, core):
     core_location = "{0}/{1}".format(location, core)
 
     def request_backup():
+
       click.echo('Requesting backup')
       url = 'http://{0}:{1}/solr/{2}/replication?command=backup&location={3}&name={4}&wt=json'.format(host, port, core, core_location, backup_name)
       resp = requests.get(url).json()
