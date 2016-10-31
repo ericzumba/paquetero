@@ -14,9 +14,8 @@ Given(/^there are (\d+) books indexed$/) do |books|
 end
 
 When(/^I request a backup$/) do
-  cmd = command("backup", "books")
-  puts cmd
-  puts @command_output = `#{cmd}` 
+  @command_output = `#{command("backup", "books")}` 
+  puts @command_output
 end
 
 Then(/^I should see ('[^\']*')$/) do |message|

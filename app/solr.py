@@ -31,7 +31,6 @@ def solr(host, port, core):
     core_location = "{0}/{1}".format(location, core)
 
     def request_backup():
-
       click.echo('Requesting backup')
       url = 'http://{0}:{1}/solr/{2}/replication?command=backup&location={3}&name={4}&wt=json'.format(host, port, core, core_location, backup_name)
       resp = requests.get(url).json()
@@ -46,7 +45,7 @@ def solr(host, port, core):
       time.sleep(10)
       details = requests.get(url).json()['details']
 
-      if ('backup' in details) and ("{0}/snapshot.{1}".format(core_location, backup_name) in details['backup']):
+      if ('backup' in details) and ("{0}".format(backup_name) in details['backup']):
         click.echo('Backup is ready')
         return True
       else:

@@ -20,7 +20,8 @@ Before do
         --host=#{SOLR_HOST} \
         --core=#{core} \
         --location=#{GUEST_VOLUME} \
-        --s3-bucket=#{BUCKET}"
+        --s3-bucket=#{BUCKET} \
+        --backup-alias=#{core}" 
   end
 end
 

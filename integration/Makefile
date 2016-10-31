@@ -24,4 +24,7 @@ rebuild: rebuild-app
 
 rebuild-app:
 	cd .. && make image 
-	
+
+clean:
+	docker-compose down
+	docker volume rm tmp_integ
