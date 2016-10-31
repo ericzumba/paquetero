@@ -17,9 +17,8 @@ def cli():
 @click.option('--max-retries', default=30, help='Maximum times paquetero checks if backup is ready')
 @click.option('--time-between-retries', default=5, help='Time in seconds between each "backup is ready?" request')
 @click.option('--aws-region', default="sa-east-1", help='AWS region in which s3 bucket is located')
-@click.option('--backup-alias', default="backup", help='The backup file extension')
-def backup(host, port, core, location, max_retries, s3_bucket, time_between_retries, aws_region, backup_alias):
-  backup = solr(host, port, core)['backup'](location, max_retries, time_between_retries, backup_alias)
+def backup(host, port, core, location, max_retries, s3_bucket, time_between_retries, aws_region):
+  backup = solr(host, port, core)['backup'](location, max_retries, time_between_retries)
   s3(aws_region)['store'](s3_bucket, backup) 
 
 @click.command()

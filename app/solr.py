@@ -27,12 +27,13 @@ def list_existing_backup_files(folder_name):
     return set()
 
 def solr(host, port, core):
-  def backup(location, retries, sleep_time, backup_name):
-    core_location = "{0}/{1}".format(location, core)
+  def backup(location, retries, sleep_time):
+    backup_folder = "{0}/backup".format(location)
+    backup_name = core
 
     def request_backup():
       click.echo('Requesting backup')
-      url = 'http://{0}:{1}/solr/{2}/replication?command=backup&location={3}&name={4}&wt=json'.format(host, port, core, core_location, backup_name)
+      url = 'http://{0}:{1}/solr/{2}/replication?command=backup&location={3}&name={4}&wt=json'.format(host, port, core, backup_folder, backup_name)
       resp = requests.get(url).json()
       if 'exception' not in resp:
         return True
@@ -56,10 +57,10 @@ def solr(host, port, core):
         else:
           raise Exception('No backup found - maximum number of retries exceeded') 
     
-    existing_backups = list_existing_backup_files(core_location)
+    existing_backups = list_existing_backup_files(backup_folder)
     if request_backup():
       click.echo('Backup requested')
       if check(retries):
-        return find_backup_file(existing_backups, core_location)
+        return find_backup_file(existing_backups, backup_folder)
 
   return dict(backup=backup)
