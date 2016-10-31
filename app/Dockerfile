@@ -1,9 +1,9 @@
-FROM python:2.7-alpine
+FROM python:3.6-alpine
 
 RUN \
   mkdir -p /aws && \
   apk -Uuv add groff less && \
-  pip install tinys3 click requests && \
+  pip install boto tinys3 click requests && \
   apk --purge -v del py-pip && \
   rm /var/cache/apk/*
 
